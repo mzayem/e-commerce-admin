@@ -9,12 +9,10 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
-    const body = await req.json();
-
-    const { label, imageUrl } = body;
+    const { label, imageUrl } = await req.json();
 
     if (!userId) {
-      return new NextResponse("unauthenticated", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     if (!label) {
@@ -22,7 +20,7 @@ export async function POST(
     }
 
     if (!imageUrl) {
-      return new NextResponse("Image URl is required", { status: 400 });
+      return new NextResponse("Image URL is required", { status: 400 });
     }
 
     if (!params.storeId) {
@@ -37,7 +35,7 @@ export async function POST(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 403 });
     }
 
     const billboard = await prismadb.billboard.create({
@@ -50,8 +48,8 @@ export async function POST(
 
     return NextResponse.json(billboard);
   } catch (error) {
-    console.log("[BILLBOARDS_POST]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("BILLBOARDS_POST", error);
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }
 
@@ -72,7 +70,7 @@ export async function GET(
 
     return NextResponse.json(billboards);
   } catch (error) {
-    console.log("[BILLBOARDS_GET]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("BILLBOARDS_GET", error);
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }
