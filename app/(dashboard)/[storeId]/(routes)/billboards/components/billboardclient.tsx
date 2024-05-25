@@ -9,6 +9,7 @@ import { DataTable } from "@/components/ui/data-table";
 
 import { BillboardColumn, columns } from "./columns";
 import { Separator } from "@/components/ui/separator";
+import { ApiList } from "@/components/ui/api-list";
 
 interface BilboardClientProps {
   data: BillboardColumn[];
@@ -34,6 +35,9 @@ export function BillboardClient({ data }: BilboardClientProps) {
       </div>
       <Separator />
       <DataTable columns={columns} data={data} searchKey="label" />
+      <Heading title="API" description="" />
+      <Separator />
+      <ApiList entityName="billboards" entityIdName="billboardsId" />
     </>
   );
 }
