@@ -25,7 +25,7 @@ export function ApiList({ entityName, entityIdName }: ApiListProps) {
       <ApiAlert
         title="GET"
         variant="public"
-        description={`${baseUrl}/{${entityIdName}}`}
+        description={`${baseUrl}/${entityName}/{${entityIdName}}`}
       />
       <ApiAlert
         title="POST"
@@ -35,12 +35,12 @@ export function ApiList({ entityName, entityIdName }: ApiListProps) {
       <ApiAlert
         title="PATCH"
         variant="admin"
-        description={`${baseUrl}/{${entityIdName}}`}
+        description={`${baseUrl}/${entityName}/{${entityIdName}}`}
       />
       <ApiAlert
         title="Delete"
         variant="admin"
-        description={`${baseUrl}/{${entityIdName}}`}
+        description={`${baseUrl}/${entityName}/{${entityIdName}}`}
       />
     </>
   );
