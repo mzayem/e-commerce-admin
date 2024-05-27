@@ -95,15 +95,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          `/api/${params.storeId}/products/${params.productId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, data);
+        await axios.post(`/api/${params.storeId}/products`, data);
       }
 
+      router.push(`/${params.storeId}/products`);
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong");
@@ -115,17 +115,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/billboards/${params.billboardId}`
-      );
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
 
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/products`);
       router.refresh();
-      toast.success("Billboard Deleted.");
+      toast.success("Product Deleted.");
     } catch (error) {
-      toast.error(
-        "Make sure you removed all the categories using this billboard first"
-      );
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -307,7 +303,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       </FormControl>
                       <SelectContent>
                         {colors.map((color) => (
-                          <SelectItem key={color.id} value={color.value}>
+                          <SelectItem key={color.id} value={color.id}>
                             {color.name}
                           </SelectItem>
                         ))}
@@ -322,6 +318,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+          </div>
+          <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="isFeatured"
