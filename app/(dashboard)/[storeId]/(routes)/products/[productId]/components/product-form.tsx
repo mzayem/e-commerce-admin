@@ -280,7 +280,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="colorId"
               render={({ field }) => (
@@ -317,6 +317,54 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <FormMessage />
                 </FormItem>
               )}
+            /> */}
+            <FormField
+              control={form.control}
+              name="colorId"
+              render={({ field }) => {
+                // Function to get hex code based on color ID
+                const getColorHexCode = (id: string) => {
+                  const color = colors.find((color) => color.id === id);
+                  return color ? color.value : "#FFFFFF"; // Default to white if color not found
+                };
+
+                return (
+                  <FormItem>
+                    <FormLabel>Color</FormLabel>
+                    <div className="flex items-center gap-x-4">
+                      <Select
+                        disabled={loading}
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              defaultValue={field.value}
+                              placeholder="Select a color"
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {colors.map((color) => (
+                            <SelectItem key={color.id} value={color.id}>
+                              {color.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <div
+                        className="p-4 rounded-full border"
+                        style={{
+                          backgroundColor: getColorHexCode(field.value),
+                        }}
+                      />
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
           </div>
           <div className="grid grid-cols-3 gap-8">
