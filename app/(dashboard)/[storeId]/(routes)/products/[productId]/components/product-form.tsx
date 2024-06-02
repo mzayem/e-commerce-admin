@@ -5,7 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Trash } from "lucide-react";
-import { Category, Color, Image, Product, Size } from "@prisma/client";
+import { Category, Color, Image, Product, Storage } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams, useRouter } from "next/navigation";
@@ -33,13 +33,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
+  description: z.string().min(1),
   categoryId: z.string().min(1),
-  sizeId: z.string().min(1),
+  storageId: z.string().min(1),
   colorId: z.string().min(1),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
@@ -50,14 +52,14 @@ type ProductFormValues = z.infer<typeof formSchema>;
 interface ProductFormProps {
   initialData: (Product & { images: Image[] }) | null;
   categories: Category[];
-  sizes: Size[];
+  storages: Storage[];
   colors: Color[];
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
-  sizes,
+  storages,
   colors,
 }) => {
   const params = useParams();
@@ -82,8 +84,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           name: "",
           images: [],
           price: 0,
+          description: "",
           categoryId: "",
-          sizeId: "",
+          storageId: "",
           colorId: "",
           isFeatured: false,
           isArchived: false,
@@ -250,10 +253,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="sizeId"
+              name="storageId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Size</FormLabel>
+                  <FormLabel>Storage</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -264,14 +267,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Select a size"
+                          placeholder="Select a Storage"
                         />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {sizes.map((size) => (
-                        <SelectItem key={size.id} value={size.id}>
-                          {size.name}
+                      {storages.map((storage) => (
+                        <SelectItem key={storage.id} value={storage.id}>
+                          {storage.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -361,6 +364,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         }}
                       />
                     </div>
+
                     <FormMessage />
                   </FormItem>
                 );
@@ -409,6 +413,24 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               )}
             />
           </div>
+
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Desciption</FormLabel>
+                <FormControl>
+                  <Textarea
+                    disabled={loading}
+                    placeholder="Type product description here..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>
