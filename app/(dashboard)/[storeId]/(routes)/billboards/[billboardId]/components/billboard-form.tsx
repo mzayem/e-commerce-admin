@@ -74,7 +74,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       router.refresh();
       toast.success(toastMessage);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.arguments("Something went wrong");
     } finally {
       setLoading(false);
     }
