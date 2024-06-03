@@ -10,7 +10,6 @@ export async function GET(
     if (!params.storeId) {
       return new NextResponse("Store ID is required", { status: 400 });
     }
-
     if (params.billboardId) {
       const billboard = await prismadb.billboard.findUnique({
         where: {
