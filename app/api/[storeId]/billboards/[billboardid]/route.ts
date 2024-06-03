@@ -6,6 +6,7 @@ export async function GET(
   req: Request,
   { params }: { params: { storeId: string; billboardId: string } }
 ) {
+  console.log(params);
   try {
     if (!params.billboardId) {
       return new NextResponse("Billboard ID is required", { status: 400 });
