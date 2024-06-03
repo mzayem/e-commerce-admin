@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { billboardId: string } }
+  { params }: { params: { storeId: string; billboardId: string } }
 ) {
   try {
     if (!params.billboardId) {
-      return new NextResponse("Store ID is required", { status: 400 });
+      return new NextResponse("Billboard ID is required", { status: 400 });
     }
 
     const billboard = await prismadb.billboard.findUnique({
