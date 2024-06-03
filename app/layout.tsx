@@ -5,7 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "@/providers/modal-provider";
 
 import "./globals.css";
-import prismadb from "@/lib/prismadb";
+import NextTopLoader from "nextjs-toploader";
 import { ToasterProvider } from "@/providers/toast-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 
@@ -29,6 +29,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ToasterProvider />
             <ModalProvider />
+            <NextTopLoader color="#000000" />
             {children}
           </ThemeProvider>
         </body>
