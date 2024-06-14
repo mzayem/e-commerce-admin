@@ -88,7 +88,14 @@ export async function POST(
       },
     });
 
-    return NextResponse.json(product);
+    const response = NextResponse.json(product);
+    response.headers.set("Access-Control-Allow-Origin", "*"); // Allow all origins
+    response.headers.set("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    response.headers.set(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    return response;
   } catch (error) {
     console.log("PRODUCTS_POST", error);
     return new NextResponse("Internal Error", { status: 500 });
@@ -131,7 +138,14 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(products);
+    const response = NextResponse.json(products);
+    response.headers.set("Access-Control-Allow-Origin", "*"); // Allow all origins
+    response.headers.set("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    response.headers.set(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    return response;
   } catch (error) {
     console.log("PRODUCTS_GET", error);
     return new NextResponse("Internal Error", { status: 500 });
